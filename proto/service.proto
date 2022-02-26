@@ -23,7 +23,7 @@ message QueryUserInfoResult{
 
 
 service UserService{
-  rpc login(LoginRequest)returns(LoginRequest){};
+  rpc login(LoginRequest)returns(LoginResult){};
   rpc queryUserInfo(google.protobuf.StringValue)returns(QueryUserInfoResult){};
 }
 

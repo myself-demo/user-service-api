@@ -19,7 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserServiceClient interface {
-	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginRequest, error)
+	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResult, error)
 	QueryUserInfo(ctx context.Context, in *wrapperspb.StringValue, opts ...grpc.CallOption) (*QueryUserInfoResult, error)
 }
 
@@ -31,8 +31,8 @@ func NewUserServiceClient(cc grpc.ClientConnInterface) UserServiceClient {
 	return &userServiceClient{cc}
 }
 
-func (c *userServiceClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginRequest, error) {
-	out := new(LoginRequest)
+func (c *userServiceClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResult, error) {
+	out := new(LoginResult)
 	err := c.cc.Invoke(ctx, "/order.UserService/login", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -53,7 +53,7 @@ func (c *userServiceClient) QueryUserInfo(ctx context.Context, in *wrapperspb.St
 // All implementations should embed UnimplementedUserServiceServer
 // for forward compatibility
 type UserServiceServer interface {
-	Login(context.Context, *LoginRequest) (*LoginRequest, error)
+	Login(context.Context, *LoginRequest) (*LoginResult, error)
 	QueryUserInfo(context.Context, *wrapperspb.StringValue) (*QueryUserInfoResult, error)
 }
 
@@ -61,7 +61,7 @@ type UserServiceServer interface {
 type UnimplementedUserServiceServer struct {
 }
 
-func (UnimplementedUserServiceServer) Login(context.Context, *LoginRequest) (*LoginRequest, error) {
+func (UnimplementedUserServiceServer) Login(context.Context, *LoginRequest) (*LoginResult, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
 func (UnimplementedUserServiceServer) QueryUserInfo(context.Context, *wrapperspb.StringValue) (*QueryUserInfoResult, error) {
