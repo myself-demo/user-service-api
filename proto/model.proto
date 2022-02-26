@@ -1,0 +1,12 @@
+syntax = "proto3";
+package order;
+option go_package = "github.com/myself-demo/user-service-api/pb;pb";
+
+
+message User{
+  string userId = 1;
+  string userNickName = 2;
+  string userLoginName = 3;
+  string userLoginPass = 4;
+  uint64 createTime = 5;
+}

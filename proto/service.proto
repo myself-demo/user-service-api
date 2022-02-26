@@ -1,0 +1,29 @@
+syntax = "proto3";
+package order;
+option go_package = "github.com/myself-demo/user-service-api/pb;pb";
+
+import "model.proto";
+import "google/protobuf/wrappers.proto";
+import "common.proto";
+
+message LoginRequest{
+  string loginName = 1;
+  string loginPass = 2;
+}
+message LoginResult{
+  common.HandleResult handleResult = 1;
+  optional User user = 2;
+  string token = 3;
+}
+
+message QueryUserInfoResult{
+  common.HandleResult handleResult = 1;
+  optional User user = 2;
+}
+
+
+service UserService{
+  rpc login(LoginRequest)returns(LoginRequest){};
+  rpc queryUserInfo(google.protobuf.StringValue)returns(QueryUserInfoResult){};
+}
+
